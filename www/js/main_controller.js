@@ -3,9 +3,11 @@
   angular.module('ab-timer')
   .controller('MainCtrl', ['$scope', '$interval', function($scope, $interval){
     var id;
+
     $scope.min = 0;
     $scope.sec = 0;
     $scope.isRunning = false;
+    $scope.isDone = false;
 
     $scope.changeMin = function(num){
       var min = $scope.min;
@@ -31,26 +33,21 @@
 
     $scope.cancel = function(){
       $scope.isRunning = false;
+      $scope.isDone = false;
       $scope.min = 0;
       $scope.sec = 0;
       $interval.cancel(id);
     };
 
     $scope.done = function(){
+      navigator.vibrate(3000);
       $scope.isDone = true;
     };
 
     $scope.start = function(){
       if($scope.min === 0 && $scope.sec === 0){return;}
-      var cycles = (($scope.min * 60000) + ($scope.sec * 1000)) / 1000,
-          i      = 0;
       $scope.isRunning = true;
       id = $interval(function(){
-        i++;
-        if(i >= cycles){
-          $interval.cancel(id);
-          $scope.done();
-        }
         var sec = $scope.sec;
         sec -= 1;
         if(sec < 0){
@@ -58,6 +55,10 @@
           sec = 60;
         }
         $scope.sec = sec;
+        if($scope.min === 0 && $scope.sec === 0){
+          $interval.cancel(id);
+          $scope.done();
+        }
       }, 1000);
     };
 

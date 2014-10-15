@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  angular.module('ab-timer', [])
+  angular.module('ab-timer', ['ionic'])
   .run(function($ionicPlatform){
     $ionicPlatform.ready(function(){
       if(window.cordova && window.cordova.plugins.Keyboard){

@@ -12,13 +12,32 @@
     <script src="js/app.js"></script>
     <script src="js/main_controller.js"></script>
   </head>
-  <body ng-app="ab-timer" ng-controller="MainCtrl">
+  <body ng-app="ab-timer">
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Egg Timer like holy shit that egg is DONE</h1>
+      <ion-header-bar class="bar-dark">
+        <h1 class="title">You Cooking Eggs Bro?</h1>
       </ion-header-bar>
-      <ion-content>
-        <p>{{greeting}}</p>
+      <ion-content ng-controller="MainCtrl">
+        <div ng-hide="isRunning" class="list">
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="number" placeholder="Min" ng-model="min" disabled>
+            </label><a ng-click="changeMin(1)" class="button button-small"><i class="icon ion-ios7-arrow-up"></i></a><a ng-click="changeMin(-1)" class="button button-small"><i class="icon ion-ios7-arrow-down"></i></a>
+          </div>
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="number" placeholder="Sec" ng-model="sec" disabled>
+            </label><a ng-click="changeSec(1)" class="button button-small"><i class="icon ion-ios7-arrow-up"></i></a><a ng-click="changeSec(-1)" class="button button-small"><i class="icon ion-ios7-arrow-down"></i></a>
+          </div>
+          <div class="item"><a ng-click="start()" class="button button-block button-positive">Cook That EGG!!!!</a></div>
+        </div>
+        <div ng-show="isRunning" class="list">
+          <div class="item">
+            <div class="center"><span class="large">{{min.toString().length === 1 ? '0'+min : min}} : {{sec.toString().length === 1 ? '0'+sec : sec}}</span></div>
+          </div>
+          <div ng-hide="isDone" class="item"><a ng-click="cancel()" class="button button-block button-assertive">Cancel</a></div>
+          <div ng-show="isDone" class="item"><a ng-click="cancel()" class="button button-block button-assertive">Oh Shit That Egg is DONE!</a></div>
+        </div>
       </ion-content>
     </ion-pane>
   </body>

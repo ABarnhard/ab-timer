@@ -11,9 +11,29 @@ html
     script(src='cordova.js')
     script(src='js/app.js')
     script(src='js/main_controller.js')
-  body(ng-app='ab-timer', ng-controller='MainCtrl')
+  body(ng-app='ab-timer')
     ion-pane
-      ion-header-bar.bar-stable
-        h1.title Egg Timer like holy shit that egg is DONE
-      ion-content
-        p {{greeting}}
+      ion-header-bar.bar-dark
+        h1.title You Cooking Eggs Bro?
+      ion-content(ng-controller='MainCtrl')
+        .list(ng-hide='isRunning')
+          .item.item-input-inset
+            label.item-input-wrapper
+              input(type='number', placeholder='Min', ng-model='min', disabled)
+            a.button.button-small(ng-click='changeMin(1)'): i.icon.ion-ios7-arrow-up
+            a.button.button-small(ng-click='changeMin(-1)'): i.icon.ion-ios7-arrow-down
+          .item.item-input-inset
+            label.item-input-wrapper
+              input(type='number', placeholder='Sec', ng-model='sec', disabled)
+            a.button.button-small(ng-click='changeSec(1)'): i.icon.ion-ios7-arrow-up
+            a.button.button-small(ng-click='changeSec(-1)'): i.icon.ion-ios7-arrow-down
+          .item
+            a.button.button-block.button-positive(ng-click='start()') Cook That EGG!!!!
+        .list(ng-show='isRunning')
+          .item
+            .center
+              span.large {{min.toString().length === 1 ? '0'+min : min}} : {{sec.toString().length === 1 ? '0'+sec : sec}}
+          .item(ng-hide='isDone')
+            a.button.button-block.button-assertive(ng-click='cancel()') Cancel
+          .item(ng-show='isDone')
+            a.button.button-block.button-assertive(ng-click='cancel()') Oh Shit That Egg is DONE!
